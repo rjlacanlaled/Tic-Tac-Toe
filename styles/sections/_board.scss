@@ -1,0 +1,26 @@
+.board {
+    background-color: blue;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+
+    width: fit-content;
+
+    .tile {
+        background-color: blueviolet;  
+        border: 1px solid black;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 13vw;
+        height: 13vw;
+        min-width: 100px;
+        min-height: 100px;
+
+        text-align: center;
+        font-size: 2rem;
+    }
+}
