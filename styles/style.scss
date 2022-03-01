@@ -1,12 +1,12 @@
-@import './sections/board';
-@import './sections/container';
+@import "./sections/board";
+@import "./sections/container";
+@import "./sections/main";
+@import "./sections/restart";
 
-*{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 
-    color: white;
+  color: white;
 }
-
-

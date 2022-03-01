@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/style.css" />
     <script type="module" src="./scripts/main.js"></script>
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="board">
-
-        </board>
+      <section class="history"></section>
+      <section class="main">
+        <button class="history-button -prev-button" travel="backward">prev</button>
+        <div class="board"></div>
+        <button class="history-button -next-button" travel="forward">next</button>
+      </section>
+      <section class="restart">
+        <button class="restart-button">restart</button>
+      </section>
     </div>
-</body>
+  </body>
 </html>

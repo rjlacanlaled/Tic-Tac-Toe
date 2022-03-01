@@ -1,11 +1,12 @@
 import { Directions } from "../enums/directions.js";
 import { TimeTravel } from "../enums/time-travel.js";
+import { eventTarget } from "./tic-tac-toe-ui.js";
 
 // VARIABLES
 
 export const BOARD_CHANGE_EVENT = "board_change_event";
 
-export const board = [
+export let board = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
@@ -15,7 +16,9 @@ export const marker = ["o", "x"];
 export let player = 0;
 export let gameOver = false;
 
-const history = [board];
+export let history = [board.map((row) => [...row])];
+export let playerMoveHistory = [['o', [-1, -1]]];
+export let currentHistoryIndex = 0;
 
 // BOARD
 
@@ -24,11 +27,15 @@ export function switchPlayer() {
 }
 
 export function resetGame() {
-  board.forEach((row) => {
-    row.forEach((cell) => {
-      cell = null;
-    });
-  });
+  gameOver = false;
+  for (let row = 0; row < 3; row++) {
+    for (let col = 0; col < 3; col++) {
+      board[row][col] = null;
+    }
+  }
+  history = [board.map((row) => [...row])];
+  currentHistoryIndex = 0;
+  eventTarget.dispatchEvent(new Event(BOARD_CHANGE_EVENT));
 }
 
 export function isWinner(player, position) {
@@ -49,30 +56,35 @@ export function isWinner(player, position) {
   return winTiles.size > 0 ? winTiles : false;
 }
 
-export function markBoard(player, position, boardUI) {
+export function markBoard(player, position) {
   let [row, col] = position;
   row = parseInt(row);
   col = parseInt(col);
 
   board[row][col] = marker[player];
-  history.push(board);
-  boardUI.dispatchEvent(new Event(BOARD_CHANGE_EVENT));
+  history.push(board.map((row) => [...row]));
+  playerMoveHistory.push([player, [row, col]]);
+  currentHistoryIndex++;
+  eventTarget.dispatchEvent(new Event(BOARD_CHANGE_EVENT));
 }
 
 export function timeTravel(timetravel, steps) {
-  switch (timeTravel) {
+  switch (timetravel) {
     case TimeTravel.Forward:
+      board = history[++currentHistoryIndex];
       break;
     case TimeTravel.Backward:
+      board = history[--currentHistoryIndex];
       break;
   }
+  eventTarget.dispatchEvent(new Event(BOARD_CHANGE_EVENT));
 }
 
 // BOARD
 
 // GRAPH TRAVERSAL
 
-export function findCombinations(player, position) {
+function findCombinations(player, position) {
   const results = [];
   const [row, col] = position;
 
@@ -90,12 +102,7 @@ export function findCombinations(player, position) {
   return results;
 }
 
-export function findCombinationForDirection(
-  player,
-  position,
-  visited,
-  direction
-) {
+function findCombinationForDirection(player, position, visited, direction) {
   let [row, col] = position;
   col = parseInt(col);
   row = parseInt(row);
@@ -125,7 +132,7 @@ export function findCombinationForDirection(
   return [size, visited];
 }
 
-export function getNextPossiblePositionsForDirection(position, direction) {
+function getNextPossiblePositionsForDirection(position, direction) {
   const [row, col] = position;
   switch (direction) {
     case Directions.LeftDiagonal:
