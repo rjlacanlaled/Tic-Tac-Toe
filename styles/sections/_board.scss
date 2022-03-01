@@ -1,14 +1,15 @@
 .board {
-    background-color: blue;
+    background-color: white;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    gap: 5px;
 
     width: fit-content;
 
     .tile {
-        background-color: blueviolet;  
+        background-color: black;  
         border: 1px solid black;
 
         display: flex;
