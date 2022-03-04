@@ -1,9 +1,32 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
 
-    height: 100vh;
-    width: 100vw;
+  height: 100vh;
+  width: 100vw;
+
+  /*
+
+    bottom: 935
+height: 140.578125
+left: 856.65625
+right: 997.234375
+top: 794.421875
+width: 140.578125
+x: 856.65625
+y: 794.421875
+
+    */
+
+  img {
+    position: absolute;
+  }
+
+  .time-machine {
+      position: relative;
+      height: 10vw;
+      width: 10vw;
+  }
 }

@@ -13,7 +13,6 @@
 }
 
 .board .tile {
-  background-color: black;
   border: 1px solid black;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -24,12 +23,17 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 13vw;
-  height: 13vw;
+  width: 9vw;
+  height: 9vw;
   min-width: 100px;
   min-height: 100px;
   text-align: center;
   font-size: 2rem;
+}
+
+.board .tile img {
+  max-width: 100px;
+  max-height: 100px;
 }
 
 .container {
@@ -40,14 +44,36 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   height: 100vh;
   width: 100vw;
+  /*
+
+    bottom: 935
+height: 140.578125
+left: 856.65625
+right: 997.234375
+top: 794.421875
+width: 140.578125
+x: 856.65625
+y: 794.421875
+
+    */
+}
+
+.container img {
+  position: absolute;
+}
+
+.container .time-machine {
+  position: relative;
+  height: 10vw;
+  width: 10vw;
 }
 
 .main {
@@ -61,7 +87,7 @@
   color: black;
 }
 
-.restart button {
+.game-buttons button {
   color: black;
 }
 

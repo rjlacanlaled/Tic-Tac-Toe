@@ -11,19 +11,20 @@ export default function History() {
   });
 
   eventTarget.addEventListener(BOARD_CHANGE_EVENT, historyChangeHandler);
+  eventTarget.dispatchEvent(new Event(BOARD_CHANGE_EVENT));
 
   // EVENT HANDLERS
 
   function historyButtonClickHandler(event) {
-    if (!gameOver) return;
     const stringDirection = event.target.getAttribute("travel");
 
     const timeDirection =
       stringDirection == "forward" ? TimeTravel.Forward : TimeTravel.Backward;
 
     timeTravel(timeDirection, 1);
+    if (!gameOver) return;
     const [player, positions] = playerMoveHistory[currentHistoryIndex];
-    updateBoardHighlight(player, positions);
+    updateBoardHighlight(marker[player], positions);
   }
 
   function historyChangeHandler(event) {

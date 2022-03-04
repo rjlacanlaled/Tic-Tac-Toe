@@ -17,13 +17,18 @@ export let player = 0;
 export let gameOver = false;
 
 export let history = [board.map((row) => [...row])];
-export let playerMoveHistory = [['o', [-1, -1]]];
+export let playerMoveHistory = [["o", [-1, -1]]];
 export let currentHistoryIndex = 0;
 
 // BOARD
 
 export function switchPlayer() {
   player = player === 0 ? 1 : 0;
+}
+
+export function redoMove() {
+  gameOver = !gameOver;
+  revertMove();
 }
 
 export function resetGame() {
@@ -71,19 +76,29 @@ export function markBoard(player, position) {
 export function timeTravel(timetravel, steps) {
   switch (timetravel) {
     case TimeTravel.Forward:
-      board = history[++currentHistoryIndex];
+      if (gameOver) board = history[++currentHistoryIndex];
       break;
     case TimeTravel.Backward:
-      board = history[--currentHistoryIndex];
+      if (gameOver) {
+        board = history[--currentHistoryIndex];
+        break;
+      }
+
+      revertMove();
       break;
   }
   eventTarget.dispatchEvent(new Event(BOARD_CHANGE_EVENT));
 }
 
-// BOARD
+function revertMove() {
+  history.pop();
+  playerMoveHistory.pop();
+  board = history[history.length - 1].map((row) => [...row]);
+  currentHistoryIndex = history.length - 1;
+  switchPlayer();
+}
 
-// GRAPH TRAVERSAL
-
+// GRAPH FUNCTIONS
 function findCombinations(player, position) {
   const results = [];
   const [row, col] = position;
@@ -158,4 +173,4 @@ function getNextPossiblePositionsForDirection(position, direction) {
   }
 }
 
-// GRAPH TRAVERSAL
+// GRAPH FUNCTIONS
