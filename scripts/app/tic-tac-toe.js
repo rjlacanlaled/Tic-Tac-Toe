@@ -1,9 +1,8 @@
 import { Directions } from "../enums/directions.js";
 import { TimeTravel } from "../enums/time-travel.js";
-import { eventTarget } from "./tic-tac-toe-ui.js";
+import { eventTarget } from "./main-controller.js";
 
 // VARIABLES
-
 export const BOARD_CHANGE_EVENT = "board_change_event";
 
 export let board = [
@@ -12,93 +11,177 @@ export let board = [
   [null, null, null],
 ];
 
-export const marker = ["o", "x"];
-export let player = 0;
-export let gameOver = false;
+export const names = {
+  'x': "Sith",
+  "o": "Jedi"
+}
 
-export let history = [board.map((row) => [...row])];
-export let playerMoveHistory = [["o", [-1, -1]]];
-export let currentHistoryIndex = 0;
+export const scores = {
+  'x': 0,
+  'o': 0
+}
+
+export const marker = ["o", "x"];
+export let currentPlayer = 0;
+export let chosenPlayer = 0;
+export let gameOver = false;
+export let canLaunch = false;
+export let winTiles = false;
+export let gameStarted = false;
+
+export let boardHistory = {
+  past: [],
+  present: board.map((row) => [...row]),
+  future: [],
+};
+
+export let playerMoveHistory = {
+  past: [],
+  present: null,
+  future: [],
+};
+
 
 // BOARD
 
 export function switchPlayer() {
-  player = player === 0 ? 1 : 0;
+  currentPlayer = currentPlayer === 0 ? 1 : 0;
 }
 
 export function redoMove() {
-  gameOver = !gameOver;
+  // gameOver = !gameOver;
   revertMove();
+}
+
+export function endGame() {
+  gameOver = true;
+}
+
+export function setChosenPlayer(player) {
+  chosenPlayer = player;
+  currentPlayer = chosenPlayer;
 }
 
 export function resetGame() {
   gameOver = false;
+  gameStarted = false;
+  canLaunch = false;
   for (let row = 0; row < 3; row++) {
     for (let col = 0; col < 3; col++) {
       board[row][col] = null;
     }
   }
-  history = [board.map((row) => [...row])];
-  currentHistoryIndex = 0;
+
+  currentPlayer = chosenPlayer;
+  boardHistory = {
+    past: [],
+    present: board.map((row) => [...row]),
+    future: [],
+  };
+
+  playerMoveHistory = {
+    past: [],
+    present: null,
+    future: [],
+  };
+
   eventTarget.dispatchEvent(new Event(BOARD_CHANGE_EVENT));
+}
+
+export function startGame() {
+  gameStarted = true;
+}
+
+export function checkWinner() {
+  if (playerMoveHistory.past.length < 5) return canLaunch = false;
+  const [player, position] = playerMoveHistory.present;
+  canLaunch = isWinner(marker[player], position);
 }
 
 export function isWinner(player, position) {
   const [row, col] = position;
   const results = findCombinations(player, [row, col]);
-  const winTiles = new Set();
-  for (const result of results) {
-    const [size, tiles] = result;
+  winTiles = new Set();
 
+  for (const result of results) {
+
+    const [size, tiles] = result;
     if (size === 3) {
       tiles.forEach((tile) => {
         winTiles.add(tile);
       });
-      gameOver = true;
     }
   }
 
   return winTiles.size > 0 ? winTiles : false;
 }
 
-export function markBoard(player, position) {
+export function markBoard(position) {
   let [row, col] = position;
   row = parseInt(row);
   col = parseInt(col);
 
-  board[row][col] = marker[player];
-  history.push(board.map((row) => [...row]));
-  playerMoveHistory.push([player, [row, col]]);
-  currentHistoryIndex++;
+  board[row][col] = marker[currentPlayer];
+
   eventTarget.dispatchEvent(new Event(BOARD_CHANGE_EVENT));
+}
+
+export function updateHistoryState(position) {
+  let [row, col] = position;
+  row = parseInt(row);
+  col = parseInt(col);
+
+  boardHistory.past.push(boardHistory.present.map((row) => [...row]));
+  boardHistory.present = board.map((row) => [...row]);
+
+  playerMoveHistory.past.push(playerMoveHistory.present);
+  playerMoveHistory.future = [];
+  playerMoveHistory.present = [currentPlayer, [row, col]];
 }
 
 export function timeTravel(timetravel, steps) {
   switch (timetravel) {
     case TimeTravel.Forward:
-      if (gameOver) board = history[++currentHistoryIndex];
+      redo();
       break;
     case TimeTravel.Backward:
-      if (gameOver) {
-        board = history[--currentHistoryIndex];
-        break;
-      }
-
-      revertMove();
+      undo();
       break;
   }
   eventTarget.dispatchEvent(new Event(BOARD_CHANGE_EVENT));
 }
 
-function revertMove() {
-  history.pop();
-  playerMoveHistory.pop();
-  board = history[history.length - 1].map((row) => [...row]);
-  currentHistoryIndex = history.length - 1;
+function undo() {
+  if (gameOver) return;
+  if (boardHistory.past < 1) return;
+
+  playerMoveHistory.future.push(playerMoveHistory.present);
+  if (playerMoveHistory.past.length > 0)
+    playerMoveHistory.present = playerMoveHistory.past.pop();
+  boardHistory.future.push(boardHistory.present.map((row) => [...row]));
+  boardHistory.present = boardHistory.past.pop().map((row) => [...row]);
+
+  board = boardHistory.present.map((row) => [...row]);
+  checkWinner();
   switchPlayer();
 }
 
-// GRAPH FUNCTIONS
+function redo() {
+  if (gameOver) return;
+  if (boardHistory.future < 1) return;
+
+  playerMoveHistory.past.push(playerMoveHistory.present);
+  if (playerMoveHistory.future.length > 0)
+    playerMoveHistory.present = playerMoveHistory.future.pop();
+  boardHistory.past.push(boardHistory.present.map((row) => [...row]));
+  boardHistory.present = boardHistory.future.pop().map((row) => [...row]);
+
+  board = boardHistory.present.map((row) => [...row]);
+  checkWinner();
+  switchPlayer();
+}
+
+// GRID FUNCTIONS
 function findCombinations(player, position) {
   const results = [];
   const [row, col] = position;

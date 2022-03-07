@@ -1,6 +1,10 @@
 .game-buttons {
+  display: flex;
 
-    button {
-        color: black;
-    }
+  width: 50%;
+
+  button {
+    color: #00FE22;
+    width: 100%;
+  }
 }

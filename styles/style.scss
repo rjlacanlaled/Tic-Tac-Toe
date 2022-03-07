@@ -1,12 +1,65 @@
 @import "./sections/board";
+@import "./sections/game-images";
 @import "./sections/container";
 @import "./sections/main";
 @import "./sections/game-buttons";
+@import "./sections/history";
+@import "./sections/header";
+@import "./sections/welcome-screen";
+@import "./sections/introduction";
+@import "./sections/game-over";
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 
-  color: white;
+  color: #00FE22;
+  font-family: 'VT323', monospace;
+}
+
+.fade {
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  top: -25px;
+  background-image: linear-gradient(0deg, transparent,transparent);
+  z-index: 1;
+}
+
+.logo {
+  position: fixed;
+  top: 0;
+  z-index: -1;
+  width: 100%;
+  justify-content: center;
+  padding: 20px 20px;
+  background-image: url("/assets/background-stars.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 100;
+}
+
+.introduction-container {
+  overflow-y: hidden;
+}
+
+.sub-logo {
+  height: 500px;
+  position: relative;
+  margin: 50% 10% 0 10%;
+  transform-origin: 50% 100%;
+  padding: 0px 10rem 0px 10rem;
+}
+
+@keyframes crawl {
+  0% {
+    top: 0;
+    transform: rotateX(20deg)  translateZ(0);
+  }
+  100% { 
+    top: -6000px;
+    transform: rotateX(25deg) translateZ(-2500px);
+  }
 }

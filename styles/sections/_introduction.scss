@@ -1,0 +1,103 @@
+.introduction-container {
+    position: absolute;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-image: url("/assets/background-stars.jpeg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5%;
+    
+
+    .logo {
+        display: flex;
+        word-spacing: 10px;
+    }
+
+    .enter {
+        z-index: 100;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        
+
+        button {
+            max-width: 200px;
+            max-height: 50px;
+        }
+    }
+
+    h1, h2 {
+        font-family: 'Days One'; 
+        color:transparent;
+        -webkit-text-stroke: #FFE81F;
+        -webkit-text-stroke-width: 2px;
+        font-size: 6rem;
+        flex: 1 30%;
+        text-align: center;
+    }
+
+    h2 {
+        font-weight: 100;
+        font-size: 2.5rem;
+        color: #FFE81F;
+    }
+
+    h3 {
+        font-family: 'Days One'; 
+        text-align: center;
+        margin-top: 20px;
+        font-size: 2rem;
+        color: #FFE81F;
+    }
+
+    .intro-text {
+        position: absolute;
+        z-index: 100;
+        position: bottom;
+        margin-bottom: 100px;
+        display: flex;
+        align-items: flex-end;
+        font-size: 2.5rem;
+        height: 100%;
+    }
+
+    .play-game-button-container {
+        position: fixed;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+
+        width: 100%;
+
+        background-image: url("/assets/background-stars.jpeg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        
+        button {
+            border: 1px solid #FFE81F;
+            color: #FFE81F;
+            width: 100%;
+            max-width: 300px;
+            max-height: 50px;
+        }
+        
+        button:hover {
+            background-color: #FFE81F;
+            color: black;
+        }
+    }
+}

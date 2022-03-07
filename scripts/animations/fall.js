@@ -6,7 +6,7 @@ export default function animateDropObject(element, initialPos, target) {
     let targetRect = getUpdatedRect(target);
 
     let pos = initialPos;
-    let xCenter = targetRect.x + (targetRect.width / 2) - 50;
+    let xCenter = targetRect.x + (targetRect.width / 2) - 25;
 
     updateElementPosition(element, initialPos, targetRect.right, null, xCenter);
 
@@ -15,7 +15,7 @@ export default function animateDropObject(element, initialPos, target) {
 
     function animate() {
         targetRect = getUpdatedRect(target);
-        xCenter = targetRect.x + (targetRect.width / 2) - 50;
+        xCenter = targetRect.x + (targetRect.width / 2) - 25;
         
         updateElementPosition(element, )
 

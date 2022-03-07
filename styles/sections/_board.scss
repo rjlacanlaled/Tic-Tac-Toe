@@ -1,15 +1,20 @@
+$main-color: #00FE22;
+$background-color: #111119;
+$grid-border-width: 10px;
+
 .board {
-    background-color: white;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 5px;
+    margin: 2rem;
+
+    transition: all 1s ease;
 
     width: fit-content;
 
     .tile {
-        border: 1px solid black;
+        background-color: transparent;
 
         display: flex;
         justify-content: center;
@@ -24,8 +29,44 @@
         font-size: 2rem;
 
         img {
-            max-width: 100px;
-            max-height: 100px;
+            min-width: 80%;
+            min-height: 80%;
         }
-    }
+
+        &:nth-child(1) {
+            border-right: $grid-border-width solid $main-color;
+            border-bottom: $grid-border-width solid $main-color;
+        }
+
+        &:nth-child(2) {
+            border-bottom: $grid-border-width solid $main-color;
+        }
+
+        &:nth-child(3) {
+            border-left: $grid-border-width solid $main-color;
+            border-bottom: $grid-border-width solid $main-color;
+        }
+
+        &:nth-child(4) {
+            border-right: $grid-border-width solid $main-color;
+        }
+
+        &:nth-child(6) {
+            border-left: $grid-border-width solid $main-color;
+        }
+
+        &:nth-child(7) {
+            border-top: $grid-border-width solid $main-color;
+            border-right: $grid-border-width solid $main-color;
+        }
+
+        &:nth-child(8) {
+            border-top: $grid-border-width solid $main-color;
+        }
+
+        &:nth-child(9) {
+            border-left: $grid-border-width solid $main-color;
+            border-top: $grid-border-width solid $main-color;
+        }
+     }
 }

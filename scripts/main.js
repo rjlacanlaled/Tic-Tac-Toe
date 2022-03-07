@@ -1,7 +1,10 @@
-import TicTacToe from "./app/tic-tac-toe-ui.js";
-import History from "./app/history.js";
+import initChooseSide from "./app/choose-side.js";
+import initGameOver from "./app/game-over.js";
+import initIntro, { showIntro } from "./app/intro.js";
+import initTicTacToeApp from "./app/main-controller.js";
 
-TicTacToe();
-History();
 
-
+initIntro();
+initChooseSide();
+initTicTacToeApp();
+initGameOver();

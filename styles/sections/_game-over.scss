@@ -1,0 +1,71 @@
+.game-over-container {
+    position: absolute;
+
+    background-image: url("/assets/background-stars.jpeg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  
+    height: 100vh;
+    width: 100vw;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10%;
+    gap: 3rem;
+
+    h1, h2 {
+        font-family: 'Days One'; 
+        color:transparent;
+        -webkit-text-stroke: #FFE81F;
+        -webkit-text-stroke-width: 2px;
+        font-size: 6rem;
+        flex: 1 30%;
+        text-align: center;
+    }
+
+    h2 {
+        font-weight: 100;
+        font-size: 2.5rem;
+        color: #FFE81F;
+    }
+
+    .game-over-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        h3 { 
+            margin-top: 30px;
+            font-size: 2rem;
+        }
+    }
+
+    .game-over-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+
+        width: 100%;
+        height: 100%;
+
+        button {
+            max-width: 200px;
+        }
+
+        .quit-button {
+            border: 1px solid #FFE81F;
+            color: #FFE81F;
+        }
+
+        .quit-button:hover {
+            background-color: #FFE81F;
+            color: black;
+        }
+    }
+
+}
