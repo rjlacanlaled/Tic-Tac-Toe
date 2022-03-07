@@ -140,8 +140,7 @@ export default function initTicTacToeApp() {
     if (!gameStarted) startGame();
 
     const position = event.target.getAttribute("gridpos").split(",");
-    addMoveAudio.currentTime = 0;
-    addMoveAudio.play();
+    playAudioFromStart(addMoveAudio);
     markBoard(position);
     updateHistoryState(position);
     markTile(marker[currentPlayer], event.target);

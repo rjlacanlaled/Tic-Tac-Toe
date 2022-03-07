@@ -724,6 +724,10 @@ header .score-text {
   font-family: 'VT323', monospace;
 }
 
+body {
+  display: none;
+}
+
 .fade {
   position: relative;
   width: 100%;

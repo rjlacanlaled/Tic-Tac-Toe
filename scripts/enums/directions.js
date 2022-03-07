@@ -3,5 +3,4 @@ export const Directions = Object.freeze({
     Vertical: 2,
     LeftDiagonal: 3,
     RightDiagonal: 4
-
   });
